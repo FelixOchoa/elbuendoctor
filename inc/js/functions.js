@@ -328,9 +328,10 @@ function ListarCita() {
         "columns": [
             { "data": "estado_cita", },
             { "data": "cod_paciente" },
+            { "data": "fecha_cita" },
             {
-                "data": "estado_cita",
-                "render": function(data) { return '<button onclick="editarCita(' + data + ')" id="btEditar" type="button" class="btn btn-edit btn-success btn-sm">Editar</button>'; }
+                "data": "cod_paciente",
+                "render": function (data) { return '<button onclick="editarCita(' + data + ')" id="btEditar" type="button" class="btn btn-edit btn-success btn-sm">Editar</button>'; }
             }
         ]
     })
@@ -411,6 +412,144 @@ function eliminarPaciente(cod_paciente) {
 
     })
 }
+
+function editarCita(cod_paciente) {
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "controls/control.php",
+        data: {
+            opcion: "BuscarCita",
+            cod_paciente: cod_paciente,
+        },
+        success: function (resp) {
+
+            const selectDivInit = document.querySelector("#probando");
+            $('.form-horizontal').remove();
+            $('#h2').remove();
+            $('#btn-add-estcita').remove();
+            $('#btn-del-estcita').remove();
+
+
+            const h2Editar = document.createElement("h2");
+            h2Editar.id = "h2"
+            h2Editar.textContent = "Editar estado de cita"
+            selectDivInit.appendChild(h2Editar);
+
+            const contenido = document.createElement("div");
+            contenido.className = "form-horizontal";
+            selectDivInit.appendChild(contenido);
+
+            const selectDivInitAll = document.querySelector(".form-horizontal");
+            const register = document.createElement("div");
+            register.className = "row register-form";
+            selectDivInitAll.appendChild(register);
+
+            const selectContenido = document.querySelector(".row.register-form");
+
+            const divcolumna = document.createElement("div");
+            divcolumna.className = "col-md-6";
+            selectContenido.appendChild(divcolumna);
+
+            const selectDivColumn = document.querySelector(".col-md-6");
+            const divFormGroup = document.createElement("div");
+            divFormGroup.className = "form-group";
+            selectDivColumn.appendChild(divFormGroup);
+
+            const selectDivFormGroup = document.querySelector(".form-group");
+            const selectEstado = document.createElement("select");
+            selectEstado.className = "form-control";
+            selectEstado.id = "estado_cita";
+            selectEstado.type = "text";
+            selectDivFormGroup.appendChild(selectEstado);
+
+            const SelectEstadoOp = document.querySelector("#estado_cita");
+            const optionEstado = document.createElement("option");
+            optionEstado.className = "hidden";
+            optionEstado.textContent = "Estado de Cita"
+            optionEstado.selected = true;
+            optionEstado.disabled = true;
+            SelectEstadoOp.appendChild(optionEstado);
+
+            const optionEstadoAtendido = document.createElement("option");
+            optionEstadoAtendido.textContent = "Atendido"
+            SelectEstadoOp.appendChild(optionEstadoAtendido);
+            const optionEstadoNoAtendido = document.createElement("option");
+            optionEstadoNoAtendido.textContent = "No atendido"
+            SelectEstadoOp.appendChild(optionEstadoNoAtendido);
+            const optionEstadoAsignado = document.createElement("option");
+            optionEstadoAsignado.textContent = "Asignado"
+            SelectEstadoOp.appendChild(optionEstadoAsignado);
+            const optionEstadoAnulado = document.createElement("option");
+            optionEstadoAnulado.textContent = "Anulado"
+            SelectEstadoOp.appendChild(optionEstadoAnulado);
+            const optionEstadoEnServicio = document.createElement("option");
+            optionEstadoEnServicio.textContent = "En servicio"
+            SelectEstadoOp.appendChild(optionEstadoEnServicio);
+
+            const btnEditar = document.createElement("button");
+            btnEditar.id = "btn-add-estcita";
+            btnEditar.className = "btn btn-primary per";
+            btnEditar.textContent = "Actualizar"
+            btnEditar.type = "submit";
+            selectDivInit.appendChild(btnEditar);
+
+            const btnDelete = document.createElement("button");
+            btnDelete.id = "btn-del-estcita";
+            btnDelete.className = "btn btn-primary per";
+            btnDelete.textContent = "X"
+            btnDelete.type = "submit";
+            selectDivInit.appendChild(btnDelete);
+
+            if (resp[0]['estado_cita'] == null) {
+                estado_cita.value = "Estado de Cita";
+            }
+            else {
+                estado_cita.value = resp[0]['estado_cita'].capitalize();
+            }
+
+            $('#probando').slideDown(500, 'swing');
+
+            $("#btn-add-estcita").on('click', function (e) {
+                if (estado_cita.value === "Estado de Cita") {
+                    AñadirCitaInorrecta();
+                }
+                else {
+                    $.ajax({
+                        method: "POST",
+                        url: "controls/control.php",
+                        data: {
+                            opcion: 'EditarCita',
+                            cod_paciente: cod_paciente,
+                            estado_cita: estado_cita.value,
+                        },
+                        success: resp2 => {
+                            if (resp2 === "true") {
+                                AñadirCitaCorrecta();
+                                $("#ListarCitas").DataTable().ajax.reload();
+                                estado_cita.value = "Estado de Cita";
+
+                            } else {
+                                AñadirCitaInorrecta();
+                            }
+                        }
+                    })
+                }
+            });
+
+            $("#btn-del-estcita").on('click', function (e) {
+                $('#probando').slideUp(500, 'swing');
+            });
+
+
+        }
+    })
+
+
+
+}
+
 
 function editarPaciente(cod_paciente) {
 

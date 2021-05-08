@@ -25,7 +25,7 @@ if (isset($_SESSION['tipo_usuario']) === 'administrador') {
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="inc/css/style.css">
+    <link rel="stylesheet" href="inc/css/styles.css">
 </head>
 
 <body>
@@ -48,8 +48,8 @@ if (isset($_SESSION['tipo_usuario']) === 'administrador') {
                         Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());
-                        </script> <br>Todos los derechos reservados | <br> Esta página fue desarrollada
-                        <i class="icon-heart" aria-hidden="true"></i> por <a target="_blank" href="https://www.facebook.com/fdochoa/">Felix Ochoa</a>
+                        </script> <br>Todos los derechos reservados | <br> Este sitio fue desarrollado
+                        <i class="icon-heart" aria-hidden="true"></i> por <a target="_blank" href="https://www.facebook.com/fdochoa/">Felix Ochoa & Sebastian Camacho</a>
                     </p>
                 </div>
 

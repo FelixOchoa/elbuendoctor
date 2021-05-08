@@ -2,11 +2,15 @@
 include("sidebar-per.php");
 ?>
 
+<div class="container">
+    <div id="probando">
 
+    </div>
+</div>
 
 <div class="container w-full md:w-4/5 xl:w-3/5 px-2">
 
-    <a id="<?php echo ($_SESSION['username'])?>" class ="un_doctor"></a>
+    <a id="<?php echo ($_SESSION['username']) ?>" class="un_doctor"></a>
     <h2>
         Editar Cita
     </h2>
@@ -16,6 +20,7 @@ include("sidebar-per.php");
                 <tr>
                     <th>Estado de Cita</th>
                     <th>Codigo Paciente</th>
+                    <th>Fecha de la Cita</th>
                     <th>Editar Estado</th>
                 </tr>
             </thead>
@@ -28,7 +33,7 @@ include("sidebar-per.php");
 
 <div class="container w-full md:w-4/5 xl:w-3/5 px-2">
 
-    <a id="<?php echo ($_SESSION['username'])?>" class ="un_doctor"></a>
+    <a id="<?php echo ($_SESSION['username']) ?>" class="un_doctor"></a>
     <h2>
         Pacientes asignados
     </h2>

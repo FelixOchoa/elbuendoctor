@@ -48,6 +48,12 @@ switch ($_POST['opcion']) {
   case "ListarCita":
     ListarCita($con);
     break;
+  case "EditarCita":
+    EditarCita($con);
+    break;
+  case "BuscarCita":
+    BuscarCita($con);
+    break;
 }
 
 function AñadirTrabajador($con)
@@ -136,7 +142,7 @@ function ListarCita($con)
 {
   $username = $_POST['username'];
 
-  $sql = mysqli_query($con, "SELECT cod_paciente, estado_cita FROM citas WHERE un_doctor = '$username'");
+  $sql = mysqli_query($con, "SELECT cod_paciente, estado_cita, fecha_cita FROM citas WHERE un_doctor = '$username'");
 
   $citas = array(); //creamos un array
 
@@ -235,6 +241,22 @@ function BuscarPaciente($con)
   echo json_encode($pacienteT);
 }
 
+function BuscarCita($con)
+{
+  $cod_paciente = $_POST['cod_paciente'];
+
+  $sql = mysqli_query($con, "SELECT estado_cita FROM citas where cod_paciente = '$cod_paciente' ");
+
+  $pacienteT = array(); //creamos un array
+
+  while ($row = mysqli_fetch_array($sql)) {
+    array_push($pacienteT, $row);
+  }
+
+  echo json_encode($pacienteT);
+}
+
+
 function ActualizarPaciente($con)
 {
 
@@ -251,6 +273,20 @@ function ActualizarPaciente($con)
   $Foto = $_POST['Foto'];
 
   $sql = mysqli_query($con, "UPDATE paciente SET nombre = '$Nombre', apellido = '$Apellido', foto = '$Foto', fecha_nacimiento = '$fecha_nacimiento', estado = '$Estado', edad = '$edad', direccion = '$direccion', barrio = '$barrio', telefono = '$telefono', ciudad = '$ciudad' WHERE cod_paciente = '$cod_paciente'");
+
+  if ($sql == true) {
+    echo ("true");
+  } else {
+    echo mysqli_error($con);
+  }
+}
+
+function EditarCita($con)
+{
+  $estado_cita = $_POST['estado_cita'];
+  $cod_paciente = $_POST['cod_paciente'];
+
+  $sql = mysqli_query($con, "UPDATE citas SET estado_cita = '$estado_cita' WHERE cod_paciente = '$cod_paciente'");
 
   if ($sql == true) {
     echo ("true");

@@ -8329,6 +8329,19 @@ button#btn-add-cts:hover, button#btn-add-cts:focus{
   background: #410d5f;
 }
 
+button#btn-add-estcita{
+  font-size: 24px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 50px;
+}
+
+button#btn-add-estcita:hover, button#btn-add-estcita:focus{
+  background: #06577c;
+}
+
 button#btn-upd-adm{
   font-size: 24px;
   font-weight: bold;
@@ -8383,6 +8396,20 @@ button#btn-del-container{
 
 button#btn-del-container:hover, button#btn-del-container:focus{
   background: #410d5f;
+}
+
+button#btn-del-estcita{
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+  margin-left: 910px;
+  justify-content: center;
+  text-align: center;
+  height: 50px;
+}
+
+button#btn-del-estcita:hover, button#btn-del-estcita:focus{
+  background: #06577c;
 }
 
 #welcome-user{
