@@ -25,7 +25,7 @@ if (isset($_SESSION['tipo_usuario']) === 'administrador') {
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="inc/css/styles.css">
+    <link rel="stylesheet" href="inc/css/style.css">
 </head>
 
 <body>
@@ -37,7 +37,7 @@ if (isset($_SESSION['tipo_usuario']) === 'administrador') {
                 <a id="text-tools">Herramientas</a>
                 <ul class="list-unstyled components mb-5">
                     <li>
-                        <a href="manage-citas">Visualizar pacientes asignados</a>
+                        <a href="assign-patient.php">Visualizar pacientes asignados</a>
                     </li>
                     <a href="index.php?logout=true">Cerrar Sesión</a>
                     </li>

@@ -1,6 +1,10 @@
 window.onload = function () {
     ListarPersonal();
     ListarPaciente();
+    ListarPacienteDisponible();
+    ListarPersonalDisponible();
+    ListarPacientesAsignados();
+    ListarCita();
 }
 
 $("#btn-add-adm").on('click', function (e) {
@@ -11,6 +15,11 @@ $("#btn-add-adm").on('click', function (e) {
 $("#btn-upd-adm-patient").on('click', function (e) {
     e.preventDefault;
     AñadirPaciente();
+});
+
+$("#btn-add-cts").on('click', function (e) {
+    e.preventDefault;
+    AñadirCita();
 });
 
 function AñadirTrabajador() {
@@ -70,6 +79,25 @@ function AñadirPaciente() {
             Foto: Foto,
         },
         success: resp => { resp === "true" ? AñadirUsuarioCorrecto() : AñadirUsuarioIncorrecto() }
+    })
+}
+
+function AñadirCita() {
+    let cod_paciente = document.querySelector('#cod_paciente').value;
+    let fecha_cita = document.querySelector('#fechaCita').value;
+    let username = document.querySelector('#username').value;
+
+
+    $.ajax({
+        method: "POST",
+        url: "controls/control.php",
+        data: {
+            opcion: 'AñadirCita',
+            cod_paciente: cod_paciente,
+            fecha_cita: fecha_cita,
+            username: username,
+        },
+        success: resp => { resp === "true" ? AñadirCitaCorrecta() : AñadirCitaInorrecta() }
     })
 }
 
@@ -182,6 +210,50 @@ function ListarPersonalDisponible() {
             { "data": "estado" },
             { "data": "trabajando" },
             {
+                "data": "codigo",
+                "render": function (data) {
+                    return '<button onclick="editarPaciente(' + data + ')" id="btEditar" type="button" class="btn btn-edit btn-success btn-sm">Editar</button>'
+                        + '<button onclick="eliminarPaciente(' + data + ')"  id="btEliminar" type="button" class="btn btn-danger btn-sm">Eliminar</button>'
+                }
+            }
+        ]
+    })
+
+}
+
+function ListarPacienteDisponible() {
+
+    $("#ListarPacienteDisponible").DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Mostrar Todo"]],
+        "language": idioma,
+        "ajax": {
+            "method": "POST",
+            "data": { "opcion": "ListarPacienteDisponible" },
+            "url": "controls/control.php",
+            "dataSrc": "",
+        },
+        "columns": [
+            {
+                "data": "foto",
+                "render": function (data) { return '<img src="' + data + '" height="50px" width="50px">'; }
+            },
+            { "data": "cod_paciente" },
+            { "data": "nombre" },
+            { "data": "apellido" },
+            { "data": "fecha_nacimiento" },
+            { "data": "edad" },
+            { "data": "direccion" },
+            { "data": "barrio" },
+            { "data": "telefono" },
+            { "data": "ciudad" },
+            { "data": "estado" },
+            {
                 "data": "cod_paciente",
                 "render": function (data) {
                     return '<button onclick="editarPaciente(' + data + ')" id="btEditar" type="button" class="btn btn-edit btn-success btn-sm">Editar</button>'
@@ -193,6 +265,77 @@ function ListarPersonalDisponible() {
 
 }
 
+function ListarPacientesAsignados() {
+
+    let usern = document.querySelector('.un_doctor');
+    let username = usern.id.valueOf();
+
+    $("#ListarPacientesAsignados").DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Mostrar Todo"]],
+        "language": idioma,
+        "ajax": {
+            "method": "POST",
+            "data": { "opcion": "ListarPacientesAsignados", "username": username },
+            "url": "controls/control.php",
+            "dataSrc": "",
+        },
+        "columns": [
+            {
+                "data": "foto",
+                "render": function (data) { return '<img src="' + data + '" height="50px" width="50px">'; }
+            },
+            { "data": "cod_paciente" },
+            { "data": "nombre" },
+            { "data": "apellido" },
+            { "data": "fecha_nacimiento" },
+            { "data": "edad" },
+            { "data": "direccion" },
+            { "data": "barrio" },
+            { "data": "telefono" },
+            { "data": "ciudad" },
+            { "data": "estado" },
+
+        ]
+    })
+
+}
+
+function ListarCita() {
+    let usern = document.querySelector('.un_doctor');
+    let username = usern.id.valueOf();
+
+    $("#ListarCitas").DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Mostrar Todo"]],
+        "language": idioma,
+        "ajax": {
+            "method": "POST",
+            "data": { "opcion": "ListarCita", "username": username },
+            "url": "controls/control.php",
+            "dataSrc": "",
+        },
+        "columns": [
+            { "data": "estado_cita", },
+            { "data": "cod_paciente" },
+            {
+                "data": "estado_cita",
+                "render": function(data) { return '<button onclick="editarCita(' + data + ')" id="btEditar" type="button" class="btn btn-edit btn-success btn-sm">Editar</button>'; }
+            }
+        ]
+    })
+
+}
 
 function ListarPaciente() {
 
@@ -847,6 +990,36 @@ function AñadirUsuarioCorrecto() {
     Limpiar();
 }
 
+function AñadirCitaCorrecta() {
+    Swal.fire(
+        {
+            title: 'La cita se ha registrado exitosamente, ¡gracias!',
+            padding: '1rem',
+            showConfirmButton: false,
+            toast: true,
+            icon: 'success',
+            grow: 'row',
+            position: 'bottom',
+            width: '55%',
+        }
+    );
+}
+
+function AñadirCitaInorrecta() {
+    Swal.fire(
+        {
+            title: 'Error: Existe un error que no permite añadir la cita, intentalo nuevamente.',
+            padding: '1rem',
+            showConfirmButton: false,
+            toast: true,
+            icon: 'error',
+            grow: 'row',
+            position: 'bottom',
+            width: '55%',
+        }
+    );
+}
+
 function EliminarUsuarioCorrecto() {
     Swal.fire(
         {
@@ -866,11 +1039,11 @@ function EliminarUsuarioCorrecto() {
 function EliminarUsuarioIncorrecto() {
     Swal.fire(
         {
-            title: 'El usuario se ha eliminado exitosamente, ¡gracias!',
+            title: 'Error: Existe un error que no permite eliminar el usuario, intentalo nuevamente.',
             padding: '1rem',
             showConfirmButton: false,
             toast: true,
-            icon: 'success',
+            icon: 'error',
             grow: 'row',
             position: 'bottom',
             width: '55%',

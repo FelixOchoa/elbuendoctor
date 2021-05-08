@@ -33,6 +33,21 @@ switch ($_POST['opcion']) {
   case "EliminarPaciente":
     EliminarPaciente($con);
     break;
+  case "AñadirCita":
+    AñadirCita($con);
+    break;
+  case "ListarPacienteDisponible":
+    ListarPacienteDisponible($con);
+    break;
+  case "ListarPersonalDisponible":
+    ListarPersonalDisponible($con);
+    break;
+  case "ListarPacientesAsignados":
+    ListarPacientesAsignados($con);
+    break;
+  case "ListarCita":
+    ListarCita($con);
+    break;
 }
 
 function AñadirTrabajador($con)
@@ -78,6 +93,60 @@ function AñadirPaciente($con)
   }
 }
 
+function AñadirCita($con)
+{
+  $cod_paciente = (int)$_POST['cod_paciente'];
+  $fecha_cita = $_POST['fecha_cita'];
+  $username = $_POST['username'];
+
+  $sql = "INSERT INTO citas (cod_cita, cod_paciente, estado_cita, fecha_cita, un_doctor) VALUES (default, '$cod_paciente', NULL, '$fecha_cita', '$username')";
+
+  if (mysqli_query($con, $sql)) {
+    echo ("true");
+  } else {
+    echo mysqli_error($con);
+  }
+}
+
+function ListarPacientesAsignados($con)
+{
+  $username = $_POST['username'];
+
+  $sql = mysqli_query($con, "SELECT cod_paciente FROM citas WHERE un_doctor = '$username'");
+
+  $personal = array(); //creamos un array
+  $pacientes = array();
+
+  while ($row = mysqli_fetch_array($sql)) {
+    $personal[] = $row;
+  }
+
+  foreach ($personal as $cp) {
+    $sql2 = mysqli_query($con, "SELECT foto, nombre, apellido, fecha_nacimiento, edad, direccion, barrio, telefono, ciudad, estado, cod_paciente FROM paciente WHERE cod_paciente = '$cp[0]'");
+
+    while ($row = mysqli_fetch_array($sql2)) {
+      $pacientes[] = $row;
+    }
+  }
+
+  echo json_encode($pacientes);
+}
+
+function ListarCita($con)
+{
+  $username = $_POST['username'];
+
+  $sql = mysqli_query($con, "SELECT cod_paciente, estado_cita FROM citas WHERE un_doctor = '$username'");
+
+  $citas = array(); //creamos un array
+
+  while ($row = mysqli_fetch_array($sql)) {
+    $citas[] = $row;
+  }
+
+  echo json_encode($citas);
+}
+
 function ListarPersonal($con)
 {
 
@@ -92,10 +161,38 @@ function ListarPersonal($con)
   echo json_encode($personal);
 }
 
+function ListarPersonalDisponible($con)
+{
+
+  $sql = mysqli_query($con, "SELECT foto, username, nombre, apellido, tipo_usuario, estado, trabajando, codigo FROM user WHERE estado = 'activo'");
+
+  $personal = array(); //creamos un array
+
+  while ($row = mysqli_fetch_array($sql)) {
+    $personal[] = $row;
+  }
+
+  echo json_encode($personal);
+}
+
 function ListarPaciente($con)
 {
 
   $sql = mysqli_query($con, "SELECT foto, nombre, apellido, fecha_nacimiento, edad, direccion, barrio, telefono, ciudad, estado, cod_paciente FROM paciente");
+
+  $paciente = array(); //creamos un array
+
+  while ($row = mysqli_fetch_array($sql)) {
+    $paciente[] = $row;
+  }
+
+  echo json_encode($paciente);
+}
+
+function ListarPacienteDisponible($con)
+{
+
+  $sql = mysqli_query($con, "SELECT foto, nombre, apellido, fecha_nacimiento, edad, direccion, barrio, telefono, ciudad, estado, cod_paciente FROM paciente WHERE estado = 'activo'");
 
   $paciente = array(); //creamos un array
 
