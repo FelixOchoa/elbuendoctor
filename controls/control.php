@@ -142,7 +142,7 @@ function ListarCita($con)
 {
   $username = $_POST['username'];
 
-  $sql = mysqli_query($con, "SELECT cod_paciente, estado_cita, fecha_cita FROM citas WHERE un_doctor = '$username'");
+  $sql = mysqli_query($con, "SELECT cod_paciente, estado_cita, fecha_cita, observacion FROM citas WHERE un_doctor = '$username'");
 
   $citas = array(); //creamos un array
 
@@ -245,7 +245,7 @@ function BuscarCita($con)
 {
   $cod_paciente = $_POST['cod_paciente'];
 
-  $sql = mysqli_query($con, "SELECT estado_cita FROM citas where cod_paciente = '$cod_paciente' ");
+  $sql = mysqli_query($con, "SELECT estado_cita, observacion FROM citas where cod_paciente = '$cod_paciente' ");
 
   $pacienteT = array(); //creamos un array
 
@@ -285,8 +285,9 @@ function EditarCita($con)
 {
   $estado_cita = $_POST['estado_cita'];
   $cod_paciente = $_POST['cod_paciente'];
+  $observacion = $_POST['observacion'];
 
-  $sql = mysqli_query($con, "UPDATE citas SET estado_cita = '$estado_cita' WHERE cod_paciente = '$cod_paciente'");
+  $sql = mysqli_query($con, "UPDATE citas SET estado_cita = '$estado_cita', observacion = '$observacion' WHERE cod_paciente = '$cod_paciente'");
 
   if ($sql == true) {
     echo ("true");

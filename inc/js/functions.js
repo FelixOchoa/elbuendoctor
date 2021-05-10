@@ -329,6 +329,7 @@ function ListarCita() {
             { "data": "estado_cita", },
             { "data": "cod_paciente" },
             { "data": "fecha_cita" },
+            { "data": "observacion" },
             {
                 "data": "cod_paciente",
                 "render": function (data) { return '<button onclick="editarCita(' + data + ')" id="btEditar" type="button" class="btn btn-edit btn-success btn-sm">Editar</button>'; }
@@ -488,6 +489,24 @@ function editarCita(cod_paciente) {
             optionEstadoEnServicio.textContent = "En servicio"
             SelectEstadoOp.appendChild(optionEstadoEnServicio);
 
+            const divcolumnaB = document.createElement("div");
+            divcolumnaB.className = "col-md-6 derecha";
+            selectContenido.appendChild(divcolumnaB);
+
+            const selectDivColumnB = document.querySelector(".col-md-6.derecha");
+            const divFormGroupC = document.createElement("div");
+            divFormGroupC.className = "form-group observacion";
+            selectDivColumnB.appendChild(divFormGroupC);
+
+            const selectDivFormGroupC = document.querySelector(".form-group.observacion");
+            const inputObservacion = document.createElement("input");
+            inputObservacion.className = "form-control";
+            inputObservacion.id = "observacion";
+            inputObservacion.type = "text";
+            inputObservacion.placeholder = "Observación del Medico";
+            inputObservacion.value = "";
+            selectDivFormGroupC.appendChild(inputObservacion);
+
             const btnEditar = document.createElement("button");
             btnEditar.id = "btn-add-estcita";
             btnEditar.className = "btn btn-primary per";
@@ -505,7 +524,11 @@ function editarCita(cod_paciente) {
             if (resp[0]['estado_cita'] == null) {
                 estado_cita.value = "Estado de Cita";
             }
+            else if (resp[0]['observacion'] == null) {
+                inputObservacion.value = "Observación del Medico";
+            }
             else {
+                inputObservacion.value = resp[0]['observacion'];
                 estado_cita.value = resp[0]['estado_cita'].capitalize();
             }
 
@@ -513,6 +536,8 @@ function editarCita(cod_paciente) {
 
             $("#btn-add-estcita").on('click', function (e) {
                 if (estado_cita.value === "Estado de Cita") {
+                    AñadirCitaInorrecta();
+                } else if (inputObservacion.value === "Observación del Medico") {
                     AñadirCitaInorrecta();
                 }
                 else {
@@ -523,13 +548,14 @@ function editarCita(cod_paciente) {
                             opcion: 'EditarCita',
                             cod_paciente: cod_paciente,
                             estado_cita: estado_cita.value,
+                            observacion: inputObservacion.value,
                         },
                         success: resp2 => {
                             if (resp2 === "true") {
                                 AñadirCitaCorrecta();
                                 $("#ListarCitas").DataTable().ajax.reload();
                                 estado_cita.value = "Estado de Cita";
-
+                                inputObservacion.value = "Observación del Medico";
                             } else {
                                 AñadirCitaInorrecta();
                             }

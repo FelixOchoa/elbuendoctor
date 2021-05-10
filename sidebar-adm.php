@@ -2,11 +2,11 @@
 
 require "controls/login-action.php";
 
-if(!isset($_SESSION['username'])){
+if (!isset($_SESSION['username'])) {
   header('location: ./');
 }
 
-if(isset($_SESSION['tipo_usuario']) != 'administrador'){
+if (isset($_SESSION['tipo_usuario']) != 'administrador') {
   header('location: ./homepage-per.php');
 }
 
@@ -32,7 +32,7 @@ if(isset($_SESSION['tipo_usuario']) != 'administrador'){
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar-adm">
       <div class="p-4 pt-5">
-        <a href="#" class="img logo rounded-circle mb-3" style="background-image: url('<?php echo ($_SESSION['foto'])?>');"></a>
+        <a href="#" class="img logo rounded-circle mb-3" style="background-image: url('<?php echo ($_SESSION['foto']) ?>');"></a>
         <a id="welcome-user">¡Bienvenido <?php echo ($_SESSION['username']); ?>!</a>
         <a id="text-tools">Herramientas</a>
         <ul class="list-unstyled components mb-5">
@@ -62,6 +62,9 @@ if(isset($_SESSION['tipo_usuario']) != 'administrador'){
             <a href="manage-citas.php">Agendar Citas</a>
           </li>
           <li>
+            <a href="list-manage.php">Listados de reportes de gestión</a>
+          </li>
+          <li>
             <a href="index.php?logout=true">Cerrar Sesión</a>
           </li>
         </ul>
@@ -83,4 +86,3 @@ if(isset($_SESSION['tipo_usuario']) != 'administrador'){
         <i class="fa fa-bars"></i>
         <span class="sr-only">Toggle Menu</span>
       </button>
-

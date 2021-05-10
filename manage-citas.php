@@ -31,9 +31,9 @@ include("sidebar-adm.php");
 
 <div class="container w-full md:w-4/5 xl:w-3/5 px-2">
 
-<h2>
-    Personal de atención activos
-</h2>
+    <h2>
+        Personal de atención activos
+    </h2>
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
         <table id="ListarPersonalDisponible" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
             <thead>
@@ -56,9 +56,9 @@ include("sidebar-adm.php");
 </div>
 
 <div class="container w-full md:w-4/5 xl:w-3/5 px-2">
-<h2>
-    Pacientes activos
-</h2>
+    <h2>
+        Pacientes activos
+    </h2>
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
         <table id="ListarPacienteDisponible" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
             <thead>
@@ -86,4 +86,3 @@ include("sidebar-adm.php");
 <?php
 include("footer.php");
 ?>
-

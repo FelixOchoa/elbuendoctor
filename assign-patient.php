@@ -21,6 +21,7 @@ include("sidebar-per.php");
                     <th>Estado de Cita</th>
                     <th>Codigo Paciente</th>
                     <th>Fecha de la Cita</th>
+                    <th>Observación del Médico</th>
                     <th>Editar Estado</th>
                 </tr>
             </thead>
