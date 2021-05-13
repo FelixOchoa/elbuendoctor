@@ -10030,6 +10030,7 @@ h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
 }
 
 #sidebar-adm {
+  display: inline;
   min-width: 300px;
   max-width: 300px;
   background: #511177;

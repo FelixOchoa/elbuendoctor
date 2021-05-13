@@ -54,6 +54,26 @@ switch ($_POST['opcion']) {
   case "BuscarCita":
     BuscarCita($con);
     break;
+  case "mostrarRegistros":
+    MostrarRegistros($con);
+    break;
+}
+
+function MostrarRegistros($con){
+  $usuarios = mysqli_query($con, "SELECT COUNT(username) FROM user");
+  $pacientes = mysqli_query($con, "SELECT COUNT(cod_paciente) FROM paciente");
+  $citas = mysqli_query($con, "SELECT COUNT(cod_cita) FROM citas");
+  $medicos = mysqli_query($con, "SELECT COUNT(username) FROM user WHERE tipo_usuario = 'medico'");
+  $fisios = mysqli_query($con, "SELECT COUNT(username) FROM user WHERE tipo_usuario = 'fisioterapeuta'");
+  $enfer = mysqli_query($con, "SELECT COUNT(username) FROM user WHERE tipo_usuario = 'enfermero'");
+
+  $datos['medicos'] = mysqli_fetch_row($medicos);
+  $datos['fisioterapeutas'] = mysqli_fetch_row($fisios);
+  $datos['enfermeros'] = mysqli_fetch_row($enfer);
+  $datos['pacientes'] = mysqli_fetch_row($pacientes);
+  $datos['citas'] = mysqli_fetch_row($citas);
+  $datos['usuarios'] = mysqli_fetch_row($usuarios);
+  echo json_encode($datos);
 }
 
 function AñadirTrabajador($con)

@@ -22,6 +22,30 @@ $("#btn-add-cts").on('click', function (e) {
     AñadirCita();
 });
 
+function mostrarRegistros() {
+    $.ajax({
+        method: "POST",
+        url: "controls/control.php",
+        data: { opcion: 'mostrarRegistros' },
+        success: resp => {
+            let citas = document.querySelector('#total-citas');
+            let usuarios = document.querySelector('#userRegister');
+            let pacientes = document.querySelector('#total-pacientes');
+            let medicos = document.querySelector('#total-medicos');
+            let fisioterapeutas = document.querySelector('#total-fisioterapeutas');
+            let enfermeros = document.querySelector('#total-enfermeros');
+
+            let respuestas = JSON.parse(resp);
+            usuarios.textContent = respuestas['usuarios'];
+            pacientes.textContent = respuestas['pacientes'];
+            citas.textContent = respuestas['citas'];
+            medicos.textContent = respuestas['medicos'];
+            fisioterapeutas.textContent = respuestas['fisioterapeutas'];
+            enfermeros.textContent = respuestas['enfermeros'];
+        }
+    })
+}
+
 function AñadirTrabajador() {
     let Nombre = document.querySelector('#Nombre').value;
     let Apellido = document.querySelector('#Apellido').value;
@@ -142,7 +166,6 @@ let idioma =
 };
 
 function ListarPersonal() {
-
     $("#ListaPersonal").DataTable({
         "paging": true,
         "lengthChange": true,
@@ -150,7 +173,6 @@ function ListarPersonal() {
         "ordering": true,
         "info": true,
         "autoWidth": true,
-        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Mostrar Todo"]],
         "language": idioma,
         "ajax": {
             "method": "POST",
@@ -176,8 +198,34 @@ function ListarPersonal() {
                         + '<button onclick="eliminarPersonal(' + data + ')"  id="btEliminar" type="button" class="btn btn-danger btn-sm">Eliminar</button>'
                 }
             }
-        ]
+        ],
     })
+
+    setTimeout(function () {
+        pintarPersonal();
+    }, 1000);
+
+}
+
+
+
+function pintarPersonal() {
+    const tdselect2 = document.querySelectorAll('tr.odd');
+    const tdselect3 = document.querySelectorAll('tr.even');
+    for (let i = 0; i < tdselect2.length; i++) {
+
+        const seleccion = tdselect2[i].cells[4];
+        seleccion.textContent === 'administrador' ? seleccion.style.cssText = 'color: purple; font-weight: bold;' : console.log();
+        seleccion.textContent === 'medico' ? seleccion.style.cssText = 'color: cyan; font-weight: bold;' : console.log();
+        seleccion.textContent === 'enfermero' ? seleccion.style.cssText = 'color: #82E0AA; font-weight: bold;' : console.log();
+        seleccion.textContent === 'fisioterapeuta' ? seleccion.style.cssText = 'color: #82E0AA; font-weight: bold;' : console.log();
+
+        const seleccion2 = tdselect3[i].cells[4];
+        seleccion2.textContent === 'medico' ? seleccion2.style.cssText = 'color: cyan; font-weight: bold;' : console.log('');
+        seleccion2.textContent === 'fisioterapeuta' ? seleccion2.style.cssText = 'color: #82E0AA; font-weight: bold;' : console.log();
+        seleccion2.textContent === 'enfermero' ? seleccion2.style.cssText = 'color: #82E0AA; font-weight: bold;' : console.log();
+        seleccion2.textContent === 'administrador' ? seleccion2.style.cssText = 'color: purple; font-weight: bold;' : console.log('');
+    }
 
 }
 
@@ -881,6 +929,8 @@ function editarPaciente(cod_paciente) {
 
 function editarPersonal(codigo) {
     // console.log(codigo)
+    pintarAdministrador();
+
 
     $.ajax({
         type: "POST",
