@@ -75,7 +75,7 @@ if (isset($_SESSION['tipo_usuario']) != 'administrador') {
             <script>
               document.write(new Date().getFullYear());
             </script> <br>Todos los derechos reservados | <br> Esta página fue desarrollada
-            <i class="icon-heart" aria-hidden="true"></i> por <a target="_blank" href="https://www.facebook.com/fdochoa/">Felix Ochoa</a>
+            <i class="icon-heart" aria-hidden="true"></i> por <a target="_blank" href="https://www.facebook.com/fdochoa/">Felix Ochoa & Sebastian Camacho</a>
           </p>
         </div>
 
