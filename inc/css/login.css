@@ -1,5 +1,5 @@
 body{
-    background: #6d91c7;
+    background-image: url("https://i.imgur.com/l9bgEIe.jpg");
 }
 
 *{
@@ -22,7 +22,7 @@ body{
 }
 
 .container-logo{
-    background: #afc5e5;
+    background: linear-gradient(112deg, rgba(0,68,222,1) 0%, rgba(0,172,255,1) 100%);
     width: 100%;
     max-width: 500px;
     height: 50px;
@@ -54,12 +54,12 @@ body{
     margin-bottom: 0px;
     border-radius: 60px;
     margin-bottom: 100px;
-    box-shadow:  0px 0px 25px 8px rgba(0, 0, 0, 0.2);
+    box-shadow:  0px 0px 50px 0px rgba(110, 143, 252, 0.3);
     transition: all 0.25s;
 }
 
 .card h4{
-    color: #6d91c7;
+    color: #399af5;
     margin-bottom: 15px;
     font-size: 32px;
     font-weight: bold;
@@ -69,7 +69,7 @@ body{
     border-radius: 45px;
     padding: 15px 30px;
     margin-bottom: 13px;
-    background: #afc5e5;
+    background: #50b9ff;
     color: black;
     font-weight: normal;
     font-size: 21px;
@@ -96,7 +96,7 @@ body{
     border-radius: 45px;
     padding: 15px 30px;
     margin-bottom: 13px;
-    background: #afc5e5;
+    background: #50b9ff;
     color: black;
     font-weight: normal;
     font-size: 21px;
@@ -110,7 +110,7 @@ body{
 }
 
 .card #button{
-    background: #6d91c7;
+    background: linear-gradient(112deg, rgba(0,68,222,1) 0%, rgba(0,172,255,1) 100%);
     border-radius: 45px;
     padding: 15px 80px;
     color: white;
@@ -126,7 +126,7 @@ body{
 }
 
 .card #button:hover{
-    background: #456aa1;
+    background: linear-gradient(112deg, rgba(0,172,255,1) 0%, rgba(0,68,222,1) 100%);
     cursor: pointer;
 }
 
